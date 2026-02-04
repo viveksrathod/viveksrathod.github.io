@@ -210,6 +210,7 @@ Changes go live in ~1 minute.
 - Fixed hero parallax greying out stats on scroll
 - Made CTA button more prominent with pulsing glow
 - Successfully deployed to GitHub Pages
+- Moved AI Expertise section before Credentials (now section 04)
 
 ---
 
