@@ -139,13 +139,13 @@ function initCounterAnimation() {
    ============================================ */
 function initScrollAnimations() {
     // Add animation classes to elements
+    // NOTE: .timeline-item, .expertise-card, .cert-category, and .ai-card are
+    // handled by motion.js (staggered inView reveals). Everything else uses
+    // the CSS class-swap reveal below.
     const animatableSelectors = [
         '.section-header',
         '.about-visual',
         '.about-content',
-        '.timeline-item',
-        '.expertise-card',
-        '.cert-category',
         '.interest-card',
         '.education-card',
         '.recognition',
@@ -288,28 +288,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-/* ============================================
-   CARD TILT EFFECT
-   ============================================ */
-document.querySelectorAll('.expertise-card, .interest-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = (y - centerY) / 20;
-        const rotateY = (centerX - x) / 20;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-    });
-});
+/* Card tilt handled by motion.js (spring-damped). */
 
 /* ============================================
    TYPING EFFECT FOR TAGLINE (Optional)
@@ -357,22 +336,7 @@ const lazyObserver = new IntersectionObserver((entries) => {
 
 lazyElements.forEach(el => lazyObserver.observe(el));
 
-/* ============================================
-   MAGNETIC BUTTON EFFECT
-   ============================================ */
-document.querySelectorAll('.btn-primary').forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-
-        btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
-    });
-
-    btn.addEventListener('mouseleave', () => {
-        btn.style.transform = '';
-    });
-});
+/* Magnetic button handled by motion.js (spring-damped). */
 
 /* ============================================
    CONSOLE EASTER EGG

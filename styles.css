@@ -2372,3 +2372,71 @@ section {
 .stagger-4 { transition-delay: 0.4s; }
 .stagger-5 { transition-delay: 0.5s; }
 .stagger-6 { transition-delay: 0.6s; }
+
+/* ============================================
+   MOTION ONE - JS-enhanced initial states
+   Only applied when JS loads; respects reduced-motion.
+   ============================================ */
+.js-motion .hero-title { animation: none; opacity: 1; }
+.js-motion .title-word {
+    opacity: 0;
+    transform: translateY(40px);
+    will-change: transform, opacity;
+}
+/* Timeline items + cert categories: simple translate via CSS var */
+.js-motion .timeline-item,
+.js-motion .cert-category {
+    opacity: 0;
+    --reveal-ty: 30px;
+    transform: translateY(var(--reveal-ty, 0px));
+    will-change: transform, opacity;
+}
+
+/* Expertise + AI + Interest cards: unified transform driven by vars
+   so both reveal and 3D tilt-on-hover can coexist without conflict. */
+.js-motion .expertise-card,
+.js-motion .ai-card,
+.js-motion .interest-card {
+    opacity: 0;
+    --tilt-rx: 0deg;
+    --tilt-ry: 0deg;
+    --tilt-ty: 30px;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}
+.js-motion .expertise-card,
+.js-motion .ai-card,
+.js-motion .interest-card,
+.js-motion .expertise-card:hover,
+.js-motion .ai-card:hover,
+.js-motion .interest-card:hover {
+    transform: perspective(900px)
+        rotateX(var(--tilt-rx, 0deg))
+        rotateY(var(--tilt-ry, 0deg))
+        translateY(var(--tilt-ty, 0px));
+}
+.js-motion .card-icon svg path,
+.js-motion .ai-icon svg path,
+.js-motion .ai-icon svg circle,
+.js-motion .ai-icon svg rect,
+.js-motion .ai-icon svg line {
+    transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js-motion .title-word,
+    .js-motion .timeline-item,
+    .js-motion .expertise-card,
+    .js-motion .ai-card,
+    .js-motion .cert-category,
+    .js-motion .interest-card {
+        opacity: 1 !important;
+        --reveal-ty: 0px;
+        --tilt-rx: 0deg;
+        --tilt-ry: 0deg;
+        --tilt-ty: 0px;
+    }
+    .js-motion .title-word { transform: none !important; }
+    .js-motion .timeline-item,
+    .js-motion .cert-category { transform: translateY(0) !important; }
+}
